@@ -34,3 +34,23 @@ if loaded_dataframes:
         print(f"DataFrame '{name}': Rows ={df.shape[0]}, Colums={df.shape[1]}")
 else:
     print("No CSV file were loaded")
+
+# Merge all DataFrames into one
+all_dataframes_list = list(loaded_dataframes.values())
+
+combined_news_df = pd.concat(all_dataframes_list, ignore_index=True)
+print("\n--- Combined DataFrame ---")
+print(f"Combined DataFrame head: {combined_news_df.head()}")
+print(combined_news_df.head())
+
+# Inspect for unique news categories
+print("\n--- Unique categories in the combined DataFrame ---")
+print(pd.unique(combined_news_df['category']))
+
+# Check the shape of the combined DataFrame
+print(f"Combined DataFrame shape: {combined_news_df.shape}")
+
+#Check length of each category in the dataframe
+print("\n--- Length of each category in the combined DataFrame ---")
+print(combined_news_df.groupby('category').size().reset_index(name='counts').sort_values(by='counts',ascending=False))
+
